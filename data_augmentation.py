@@ -6,12 +6,13 @@ PIL数据扩充，翻转、颜色增强等
 """
 
 from PIL.ImageOps import mirror
-from PIL import Image
+from PIL import Image, ImageEnhance
 import os
 
 flowers_dir = os.getcwd() + "/flowers_augmentation/"
 
 imgFolds = ['daisy', 'rose', 'sunflower', 'tulip']
+new_imgFolds = ['daisy_new', 'rose_new', 'sunflower_new', 'tulip_new']
 
 for imgFold in imgFolds:
 
@@ -22,9 +23,11 @@ for imgFold in imgFolds:
             continue
         im_path = flowers_dir + '/' + imgFold + '/' + imgs[i]
         im = Image.open(im_path)
-        new_im = mirror(im)
-        new_im.save("new_" + imgs[i])
+        newM_im = mirror(im)
+        newM_im.save(flowers_dir + '/' + imgFold + '/' + "newM_" + imgs[i])
 
+        newC_im = ImageEnhance.Color(im).enhance(1.5)
+        newC_im.save(flowers_dir + '/' + imgFold + '/' + "newC_" + imgs[i])
 
 
 
