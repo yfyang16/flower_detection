@@ -14,42 +14,29 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg  # 用于读取图片
 
-img_size = 224
+img_size = 200
 
-#normalize = T.Normalize(mean=[0.4, 0.4, 0.4], std=[0.2, 0.2, 0.2])
+
 transform  = T.Compose([
          T.RandomResizedCrop(img_size),
          T.RandomHorizontalFlip(),
          T.ToTensor(),
-         T.Normalize(),
+         #T.Normalize(),
 ])
 
 
 def load_train_dataset():
-    flowers_dir = os.getcwd() + "/flowers/"
+    flowers_dir = os.getcwd() + "/flowers_augmentation/"
 
     dataset = ImageFolder(flowers_dir, transform=transform)
 
     return dataset
 
-def load_test_dataset():
-    flowers_dir = os.getcwd() + "/flowers/"
+def load_test_dataset(test_dir):
+    flowers_dir = os.getcwd() + '/' + str(test_dir) +'/'
 
     dataset = ImageFolder(flowers_dir, transform=transform)
 
     return dataset
 
 
-# np.save("dataset.npy", dataset)
-
-#print(dataset.class_to_idx)
-#print(dataset.imgs)
-# print(dataset[0][0].size())
-
-# to_img = T.ToPILImage()
-
-#draw = ImageDraw.Draw(to_img(dataset[0][0]*0.2+0.4))
-
-# lena1 = mpimg.imread(to_img(dataset[0][0]*0.2+0.4))
-# plt.imshow(to_img(dataset[0][0]*0.2+0.4))
-# plt.show()
